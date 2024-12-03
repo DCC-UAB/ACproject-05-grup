@@ -17,7 +17,8 @@ import seaborn as sns
 import pandas as pd
 
 # Ruta del fitxer al teu ordinador
-file_path = r"C:\Users\Omar\ACproject-05-grup\dataset.csv" #Afegir la ruta del fitxer a carregar!!!
+# file_path = r"C:\Users\Omar\ACproject-05-grup\dataset.csv" #Afegir la ruta del fitxer a carregar!!!
+file_path = "dataset.csv" #Afegir la ruta del fitxer a carregar!!!
 
 # Càrrega del dataset en un DataFrame de Pandas
 dataset = pd.read_csv(file_path)
