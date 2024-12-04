@@ -264,6 +264,7 @@ loadings.head(20)
 # Cell starts here
 # Imports
 from sklearn.cluster import KMeans
+from sklearn.cluster import AgglomerativeClustering 
 # Cell ends here
 
 # Cell starts here
