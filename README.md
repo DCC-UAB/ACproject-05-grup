@@ -16,7 +16,7 @@ Abans de començar amb el modelatge, cal entendre les dades. Algunes preguntes i
 Quines variables conté el dataset? Quines són categòriques i quines són numèriques?
 
 ### Categòriques:
-* sex (gènere 0 -> Home | 1 -> Dona | 2 -> No binari)
+* sex (gènere 1 -> Home | 2 -> Dona | 3 -> No binari)
 * year (any acadèmic)
 * part (parella 1 -> Si | 0 -> No)
 * job   (treball 1 -> Si | 0 -> No)    
