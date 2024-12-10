@@ -18,8 +18,8 @@ Quines variables conté el dataset? Quines són categòriques i quines són num�
 ### Categòriques:
 * sex (gènere 1 -> Home | 2 -> Dona | 3 -> No binari)
 * year (any acadèmic)
-* part (parella 1 -> Si | 2 -> No)
-* job   (treball 1 -> Si | 2 -> No)    
+* part (parella 1 -> Si | 0 -> No)
+* job   (treball 1 -> Si | 0 -> No)    
 * psyt  (s'ha consultat un psicòleg en els últims 12 mesos? 0 -> No | 1 -> Si)
 * glang (llengua materna)
 * health (nivel de satisfacció amb la salut) [1 -> Molt Baix || 5 -> Molt alt]
