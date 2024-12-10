@@ -6,6 +6,7 @@ Illias Dachouri -
 Bernat Vidal - 
 Joan Colillas
 </h3>
+link dataset: https://www.kaggle.com/code/faressayadi/medical-student-health-analysis-fares-sayadi/input
 
 # Informe sobre el projecte: Mental Health
 
@@ -15,38 +16,27 @@ Abans de començar amb el modelatge, cal entendre les dades. Algunes preguntes i
 Quines variables conté el dataset? Quines són categòriques i quines són numèriques?
 
 ### Categòriques:
-* sex (gènere)
-* part (parella)
-* job   (treball)    
-* psyt  (problemes psicològics)
+* sex (gènere 1 -> Home | 2 -> Dona | 3 -> No binari)
+* year (any acadèmic)
+* part (parella 1 -> Si | 2 -> No)
+* job   (treball 1 -> Si | 2 -> No)    
+* psyt  (s'ha consultat un psicòleg en els últims 12 mesos? 0 -> No | 1 -> Si)
 * glang (llengua materna)
+* health (nivel de satisfacció amb la salut) [1 -> Molt Baix || 5 -> Molt alt]
+* stud_h (hores d'estudi per setmana)
 
 ### Numèriques:
-* year (any acadèmic)
 * age (edat)
-* stud_h (hores d'estudi)
-* health (nivel de satisfacció amb la salut) [1 -> Molt Baix || 5 -> Molt alt ]
 * jspe (nivell d'emapatía)
 * qcae_cog (nivell cognitiu)
 * qcae_aff (nivell d'afecció)
-* amsp (AMSP score?) **
-* erec_meaan (mitjana de respostes correctes?) **
-* cesd (CES-D score?) **
-* stai_t (STAI score?) **
+* amsp () ***
+* erec_mean (percentatge total de respostes correctes en el GERT, un test on s'avalua si les persones poden reconeixer les emocions basant-se en llenguatge no verbal)
+* cesd (escala de depressió)
+* stai_t (escala d'ansietat) 
 * mbi_ex (cansament emocional)
-* mbi_cy (cinisme)
+* mbi_cy (cinisme -> Mesura que tant distant una persona se sent respecte el seu voltant)
 * mbi_ea (eficàcia acadèmica)
-
-
-A continuació, un breu resum de les variables més rellevants:
-Variables identificadores o generals: id, age, year, sex.
-Indicadors de salut i benestar: health (estat de salut), psyt (problemes psicològics), cesd (escala de depressió), stai_t (nivell d'ansietat).
-Indicadors d'hàbits i rendiment: stud_h (hores d'estudi), erec_mean (temps de recuperació).
-Indicadors professionals: job, part (relacions laborals).
-Mesures psicològiques: qcae_cog (empatia cognitiva), qcae_aff (empatia afectiva), amsp, mbi_ex (esgotament emocional), mbi_cy (cínicisme), mbi_ea (realització personal).
-
-Variables categòriques: sex (gènere), part (parella), job (treball). Aquestes tenen un nombre limitat de valors únics.
-Variables numèriques: Inclouen indicadors de salut (health, cesd, stai_t), hàbits (stud_h), i mètriques psicològiques (qcae_cog, mbi_ex, etc.).
 
 ### Hi ha dades mancants o valors atípics? Si és així, com els gestionarem?
 

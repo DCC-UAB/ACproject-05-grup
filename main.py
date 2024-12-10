@@ -289,7 +289,7 @@ plt.xticks(range(1, 10))
 plt.show()
 
 # Cell ends here
-
+##################################################################################################################################
 # Cell starts here
 # Create a KMeans instance with 3 clusters: model (k=3) and fit it to the data (pca_features) using the fit() method
 model = KMeans(n_clusters=3)
