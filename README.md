@@ -70,3 +70,14 @@ Algunes variables, com cesd i stud_h, tenen rangs molt amplis i es beneficiarien
 
 Codificació One-Hot per variables com sex i job. Això permetrà que els models tractin aquestes dades categòriques.
 
+# Preguntes prèvies a l'estudi
+
+Abans d'agrupar als estudiants basant-nos en el seu estat de salut mental, ens hem fet una sèrie de preguntes que volem contestar fent el clustering. Entre d'altres, ens hem plantejat les següents:
+
+### Quin tipus de grups d'estudiants haurien de rebre major suport per la seva salut mental?
+
+### Quines característiques comparteixen els estudiants amb millor/pitjor estat de salut mental?
+
+### Com influeixen diferents característiques relacionades amb els estudis a la salut mental dels estudiants? 
+
+### L'anàlisi estadístic es pot confirmar amb els resultats del clustering?
