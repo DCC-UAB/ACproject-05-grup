@@ -24,7 +24,6 @@ Quines variables conté el dataset? Quines són categòriques i quines són num�
 * glang (llengua materna)
 * health (nivel de satisfacció amb la salut) [1 -> Molt Baix || 5 -> Molt alt]
 * stud_h (hores d'estudi per setmana)
-
 ### Numèriques:
 * age (edat)
 * jspe (nivell d'emapatía)
