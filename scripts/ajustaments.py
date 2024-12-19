@@ -1,27 +1,39 @@
+'''
+En aquest script es mostra el codi per normalitzar les dades dins d'un dataframe.
+A més, un cop normalitzades, també es dona l'opció de mostrar les distribucions i
+els valors/rangs de les variables en un plot.
+'''
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import math
-import time
-
-file = "dataset.csv"
-dataset = pd.read_csv(file)
-print(dataset.head())
-
-df = dataset.drop(['id', 'amsp'], axis=1)
-
-df_cat = df[['sex', 'year', 'glang', 'part', 'job', 'stud_h', 'health', 'psyt']]
-df_num = df[['age', 'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean', 'cesd', 'stai_t', 'mbi_ex', 'mbi_cy', 'mbi_ea']]
-# df_cat = df[['sex', 'year', 'glang', 'part', 'job', 'stud_h', 'health', 'psyt']]
-# df_num = df[['age', 'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean']]
-
-vars_categoriques = ['sex', 'year', 'glang', 'part', 'job', 'stud_h', 'health', 'psyt']
-vars_num = ['age', 'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean', 'cesd', 'stai_t', 'mbi_ex', 'mbi_cy', 'mbi_ea']
-vars_bin = ['part', 'job', 'psyt']
+import os
 
 
-#DETECCIÓ DE BIAIX
+'''
+IMPORTANT
+ En cas que no funcioni, cal assegurar-se que estem executant el fitxer des de 
+ ACPROJECT-05-GRUP
+ Per comprovar des d'on executem podem fer servir os.getcwd()
+ Si en el output es veu que estem executant des de dins d'una carpeta:
+    - "c:\\Users\\joanc\\OneDrive\\Desktop\\ACproject-05-grup\\dataset1"
+ Podem arreglar-ho descomentant la segÜnet línia del script. Serveix tant per 
+ Windows com per Linux.
+ Per qualsevol dubte, se'ns pot contactar des dels correus específicats en 
+ el README
+ '''
+# os.chdir('..)
+
+
+# # Carregar dataset des de csv
+# df = df_loaders.load_df()
+
+# Carregar dataset guardat pickle
+file = "pickles/dfs/df.pk1"
+df = pd.read_pickle(file)
+
+# ===============================================================================================
+
 # Determine grid size
 def df_dis(df):
     num_cols = len(df.columns)
@@ -53,8 +65,6 @@ df_dis(df)
 
 # NORMALITZACIÓ MAX
 df_max_scaled = df.copy() 
-  
-# apply normalization techniques 
 for column in df_max_scaled.columns: 
     df_max_scaled[column] = df_max_scaled[column]  / df_max_scaled[column].abs().max() 
 
@@ -62,18 +72,13 @@ df_dis(df_max_scaled)
 
 #NORMALITZACIÓ MIN-MAX
 df_min_max_scaled = df.copy() 
-  
-# apply normalization techniques 
 for column in df_min_max_scaled.columns: 
     df_min_max_scaled[column] = (df_min_max_scaled[column] - df_min_max_scaled[column].min()) / (df_min_max_scaled[column].max() - df_min_max_scaled[column].min())     
   
-# view normalized data 
 df_dis(df_min_max_scaled)
 
-#COMPROVACIONS
-df_default = df.copy()
-df_default.head()
-
-df_max_scaled.head()
-
-df_min_max_scaled.head()
+# #COMPROVACIONS
+# df_default = df.copy()
+# df_default.head()
+# df_max_scaled.head()
+# df_min_max_scaled.head()
