@@ -80,3 +80,5 @@ Abans d'agrupar als estudiants basant-nos en el seu estat de salut mental, ens h
 ### Com influeixen diferents característiques relacionades amb els estudis a la salut mental dels estudiants? 
 
 ### L'anàlisi estadístic es pot confirmar amb els resultats del clustering?
+
+### En general, els estudiants tenen bon estat de salut?
