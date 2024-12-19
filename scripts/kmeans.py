@@ -1,6 +1,6 @@
 '''
 En aquest fitxer executem i visualitzem l'algorisme de
-clustering 
+clustering Kmeans
 '''
 import pandas as pd
 import numpy as np
@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plots
 import df_loaders
+
 
 import math
 import time
@@ -48,4 +49,55 @@ df_final_file= "pickles/dfs/df_final.pk1"
 df_final = pd.read_pickle(df_final_file)
 
 # ===============================================================================================
-...
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+
+def kmeans(dfs, max_k=10):
+    df_t = dfs.copy()
+
+    inertia = []
+    clusterings = []
+
+    sil_best_score = -1
+    sil_best_k = 2
+
+    for k in range(2, max_k + 1):
+        model = KMeans(n_clusters=k, random_state=42, n_init=10)
+        clusters = model.fit_predict(df_t)
+        
+        # Silhouette
+        if k > 2:
+            score = silhouette_score(df_t, clusters)
+            if score > sil_best_score:
+                sil_best_score = score
+                sil_best_k = k
+         ##
+
+
+        inertia.append(model.inertia_)
+        cluster_centers = model.cluster_centers_
+        clusterings.append((k, clusters, cluster_centers))
+
+    # Silhouette 
+    print("Millor k silhouette:", sil_best_k)
+
+
+    plt.figure(figsize=(8, 6))
+    k_values = range(2, max_k + 1)
+    plt.plot(k_values, inertia, marker='o', linestyle='--')
+    plt.xlabel('Number of Clusters (k)')
+    plt.ylabel('Inertia (Within-Cluster Sum of Squares)')
+    plt.title('Elbow Method for Optimal k')
+    plt.xticks(k_values)
+    plt.grid(True)
+    plt.show()
+    
+    return clusterings
+
+c = kmeans(df_final, 8)
+
+# Escollim millor k -> 3
+
+k_def = 3
+
+plots.plot_heatmap(df, df_max_scaled, c, ['sex', 'year', 'cesd', 'stai_t', 'part', 'job', 'health', 'psyt', 'mbi_ea'], k_def)
