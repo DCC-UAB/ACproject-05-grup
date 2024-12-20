@@ -8,10 +8,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plots
 import df_loaders
-
-import math
-import time
-
 '''
 IMPORTANT
  En cas que no funcioni, cal assegurar-se que estem executant el fitxer des de 

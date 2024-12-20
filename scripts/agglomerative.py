@@ -1,6 +1,6 @@
 '''
 En aquest fitxer executem i visualitzem l'algorisme de
-clustering 
+clustering Agglomerative
 '''
 import pandas as pd
 import numpy as np
