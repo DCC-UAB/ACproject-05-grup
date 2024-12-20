@@ -63,7 +63,7 @@ scaler = StandardScaler()
 y = scaler.fit_transform(df[['stai_t']])
 
 # Dividir el conjunto de dades en train i test
-X_train, X_test, y_train, y_test = train_test_split(df_no_objectius, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(df_final, y, test_size=0.2, random_state=42)
 
 # Crear el model de Random Forest Regressor
 rf = RandomForestRegressor(n_estimators=100, random_state=42)
@@ -83,7 +83,7 @@ print("Coeficient de determinació (R²):", r2)
 
 # Obtenir les importancies de les característiques
 importances = rf.feature_importances_
-feature_names = df_no_objectius.columns
+feature_names = df_final.columns
 
 # Crear un gráfico de barras para visualizar las importancias
 plt.figure(figsize=(10, 6))
