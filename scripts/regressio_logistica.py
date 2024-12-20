@@ -124,10 +124,10 @@ def entrenar_logistic_regression(X, y):
 # ======================================
 if __name__ == "__main__":
     # Variables
-    variables_psicologiques = ['cesd', 'stai_t', 'mbi_ex']
-    variables_academiques = ['year', 'stud_h', 'health']
+    variables_psicologiques = ['cesd', 'stai_t', 'mbi_ex', 'mbi_cy']
+    variables_academiques = ['year','health']
     variables_binàries = ['part', 'job', 'psyt']
-    variables_numeriques = ['age', 'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean', 'mbi_ea', 'mbi_cy']
+    variables_numeriques = ['stud_h','age', 'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean', 'mbi_ea']
 
     # Crear índex de salut mental
     df['mental_health_index'] = df[variables_psicologiques].mean(axis=1)
