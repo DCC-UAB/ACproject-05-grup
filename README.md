@@ -82,7 +82,6 @@ python3 <fitxer>.py
 ## 5. Algoritmes utilitzats
 Per al nostre cas hem fet servir algoritmes de clusterització per ajuntar els estudiants en diferents grups segons les seves característiques. Així doncs, hem fet servir els següents algoritmes de clustering:
 - Kmeans
-- Mini Batch Kmeans
 - Gmm (Gaussian Mixture Model)
 - Aglomerative clustering
 
