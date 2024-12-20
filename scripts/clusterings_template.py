@@ -33,6 +33,7 @@ IMPORTANT
 # df_max_scaled = df_loaders.load_max_scaled()
 # df_min_max_scaled = df_loaders.load_min_max_scaled()
 # df_final = df_loaders.load_final()
+# df_no_objectius = df_loaders.load_no_objectius()
 
 # Carregar datasets guardats pickle
 df_file = "pickles/dfs/df.pk1"
@@ -44,8 +45,11 @@ df_max_scaled = pd.read_pickle(df_max_scaled_file)
 df_min_max_scaled_file = "pickles/dfs/df_min_max_scaled.pk1"
 df_min_max_scaled = pd.read_pickle(df_min_max_scaled_file)
 
-df_final_file= "pickles/dfs/df_final.pk1"
+df_final_file = "pickles/dfs/df_final.pk1"
 df_final = pd.read_pickle(df_final_file)
+
+df_no_objectius_file = "pickles/dfs/df_no_objectius.pk1"
+df_no_objectius = pd.read_pickle(df_no_objectius_file)
 
 # ===============================================================================================
 ...

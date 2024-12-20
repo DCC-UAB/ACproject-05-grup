@@ -5,6 +5,9 @@ Aquest script serà importat en altres scripts. La seva funció
 
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.manifold import TSNE
+from sklearn.decomposition import PCA
+import pandas as pd
 
 def plot_heatmap(df_original, df_normalized, clusters, variables, k_def):
     df_norm_copy = df_normalized.copy()
@@ -55,3 +58,110 @@ def plot_sorted_classified_clusters(df_original, clusters, health_variables, k_d
     plt.show()
 
     print(mean_health[['health_score', 'health_status']])
+
+
+def plot_tsne_clusters(df, clusterss, k_def):
+    df_t = df.copy()
+    for k, clusters, _ in clusterss:
+            if k == k_def:
+                tsne = TSNE(n_components=3, random_state=42, n_iter=1000)
+                tsne_result = tsne.fit_transform(df_t)
+                tsne_df = pd.DataFrame(tsne_result, columns=['Dim1', 'Dim2', 'Dim3'])
+                tsne_df['Cluster'] = clusters
+
+                fig = plt.figure(figsize=(10, 8))
+                ax = fig.add_subplot(111, projection='3d')
+
+                for cluster in range(k_def):
+                    cluster_data = tsne_df[tsne_df['Cluster'] == cluster]
+                    ax.scatter(cluster_data['Dim1'], cluster_data['Dim2'], cluster_data['Dim3'], label=f'Cluster {cluster}')
+            
+                ax.set_title('Clusters Visualizados con t-SNE (3D)')
+                ax.set_xlabel('Dim1')
+                ax.set_ylabel('Dim2')
+                ax.set_zlabel('Dim3')
+                ax.legend()
+                plt.show()
+
+def plot_tsne_clusters_2D(df, clusterss, k_def):
+    df_t = df.copy()
+    for k, clusters, _ in clusterss:
+        if k == k_def:
+            # Canviem n_components a 2 per obtenir t-SNE en 2D
+            tsne = TSNE(n_components=2, random_state=42, n_iter=1000)
+            tsne_result = tsne.fit_transform(df_t)
+            
+            # Crear DataFrame amb els resultats de t-SNE
+            tsne_df = pd.DataFrame(tsne_result, columns=['Dim1', 'Dim2'])
+            tsne_df['Cluster'] = clusters
+
+            # Crear el gràfic en 2D
+            fig, ax = plt.subplots(figsize=(10, 8))
+
+            # Visualitzar cada cluster
+            for cluster in range(k_def):
+                cluster_data = tsne_df[tsne_df['Cluster'] == cluster]
+                ax.scatter(cluster_data['Dim1'], cluster_data['Dim2'], label=f'Cluster {cluster}')
+            
+            # Ajustar etiquetes i títol
+            ax.set_title('Clusters Visualitzats amb t-SNE (2D)')
+            ax.set_xlabel('Dim1')
+            ax.set_ylabel('Dim2')
+            ax.legend()
+            plt.show()
+
+
+def plot_pca_clusters(df, clusterss, k_def):
+    df_t = df.copy()
+
+    for k, clusters, _ in clusterss:
+        if k == k_def:
+            # Apply PCA for dimensionality reduction
+            pca = PCA(n_components=3)
+            pca_result = pca.fit_transform(df_t)
+            pca_df = pd.DataFrame(pca_result, columns=['Dim1', 'Dim2', 'Dim3'])
+            pca_df['Cluster'] = clusters
+
+            # 3D Plot
+            fig = plt.figure(figsize=(10, 8))
+            ax = fig.add_subplot(111, projection='3d')
+
+            for cluster in range(k_def):
+                cluster_data = pca_df[pca_df['Cluster'] == cluster]
+                ax.scatter(cluster_data['Dim1'], cluster_data['Dim2'], cluster_data['Dim3'], label=f'Cluster {cluster}')
+            
+            ax.set_title('Clusters Visualized with PCA (3D)')
+            ax.set_xlabel('Dim1')
+            ax.set_ylabel('Dim2')
+            ax.set_zlabel('Dim3')
+            ax.legend()
+            plt.show()
+
+
+def plot_pca_clusters_2D(df, clusterss, k_def):
+    df_t = df.copy()
+
+    for k, clusters, _ in clusterss:
+        if k == k_def:
+            # Aplicar PCA per a la reducció de dimensionalitat a 2D
+            pca = PCA(n_components=2)
+            pca_result = pca.fit_transform(df_t)
+            
+            # Crear DataFrame amb els resultats de PCA
+            pca_df = pd.DataFrame(pca_result, columns=['Dim1', 'Dim2'])
+            pca_df['Cluster'] = clusters
+
+            # Gràfic en 2D
+            fig, ax = plt.subplots(figsize=(10, 8))
+
+            # Visualitzar cada cluster
+            for cluster in range(k_def):
+                cluster_data = pca_df[pca_df['Cluster'] == cluster]
+                ax.scatter(cluster_data['Dim1'], cluster_data['Dim2'], label=f'Cluster {cluster}')
+            
+            # Ajustar títol i etiquetes
+            ax.set_title('Clusters Visualitzats amb PCA (2D)')
+            ax.set_xlabel('Dim1')
+            ax.set_ylabel('Dim2')
+            ax.legend()
+            plt.show()

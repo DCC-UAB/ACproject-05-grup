@@ -34,6 +34,7 @@ IMPORTANT
 # df_max_scaled = df_loaders.load_max_scaled()
 # df_min_max_scaled = df_loaders.load_min_max_scaled()
 # df_final = df_loaders.load_final()
+# df_no_objectius = df_loaders.load_no_objectius()
 
 # Carregar datasets guardats pickle
 df_file = "pickles/dfs/df.pk1"
@@ -45,8 +46,11 @@ df_max_scaled = pd.read_pickle(df_max_scaled_file)
 df_min_max_scaled_file = "pickles/dfs/df_min_max_scaled.pk1"
 df_min_max_scaled = pd.read_pickle(df_min_max_scaled_file)
 
-df_final_file= "pickles/dfs/df_final.pk1"
+df_final_file = "pickles/dfs/df_final.pk1"
 df_final = pd.read_pickle(df_final_file)
+
+df_no_objectius_file = "pickles/dfs/df_no_objectius.pk1"
+df_no_objectius = pd.read_pickle(df_no_objectius_file)
 
 # ===============================================================================================
 from sklearn.cluster import KMeans
@@ -73,14 +77,12 @@ def kmeans(dfs, max_k=10):
                 sil_best_k = k
          ##
 
-
         inertia.append(model.inertia_)
         cluster_centers = model.cluster_centers_
         clusterings.append((k, clusters, cluster_centers))
 
     # Silhouette 
     print("Millor k silhouette:", sil_best_k)
-
 
     plt.figure(figsize=(8, 6))
     k_values = range(2, max_k + 1)
@@ -94,10 +96,12 @@ def kmeans(dfs, max_k=10):
     
     return clusterings
 
-c = kmeans(df_final, 8)
+c = kmeans(df_no_objectius, 8)
 
 # Escollim millor k -> 3
 
 k_def = 3
 
-plots.plot_heatmap(df, df_max_scaled, c, ['sex', 'year', 'cesd', 'stai_t', 'part', 'job', 'health', 'psyt', 'mbi_ea'], k_def)
+plots.plot_tsne_clusters(df_no_objectius, c, k_def)
+
+plots.plot_heatmap(df, df_min_max_scaled, c, ['sex', 'cesd', 'stai_t', 'mbi_ex', 'part', 'year', 'job', 'health', 'psyt', 'mbi_ea'], k_def)

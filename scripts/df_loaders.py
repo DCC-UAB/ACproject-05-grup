@@ -20,7 +20,7 @@ def load_final():
 
     df_cat_order = df[['year', 'stud_h', 'health']]
     df_cat_norder = df[['glang','sex']]
-    df_num = df[['age', 'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean', 'mbi_ea']]
+    df_num = df[['age', 'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean', 'mbi_ea', 'mbi_cy']]
     df_bin = df[['part', 'job', 'psyt']]
 
     df_cat_norder_encoded = pd.get_dummies(df_cat_norder, columns=['glang', 'sex'], prefix=['glang', 'sex'])
@@ -53,4 +53,9 @@ def load_min_max_scaled():
         df_min_max_scaled[column] = (df_min_max_scaled[column] - df_min_max_scaled[column].min()) / (df_min_max_scaled[column].max() - df_min_max_scaled[column].min())
     return df_min_max_scaled
 
-
+def load_no_objectius():
+    df_final = load_final()
+    return df_final[['year', 'stud_h', 'health', 'sex_1', 'sex_2', 'sex_3', 'age', 
+               'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean', 'mbi_ea', 'part', 
+               'job', 'psyt', 'mbi_cy'
+        ]]
