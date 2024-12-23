@@ -76,7 +76,7 @@ def plot_tsne_clusters(df, clusterss, k_def):
                     cluster_data = tsne_df[tsne_df['Cluster'] == cluster]
                     ax.scatter(cluster_data['Dim1'], cluster_data['Dim2'], cluster_data['Dim3'], label=f'Cluster {cluster}')
             
-                ax.set_title('Clusters Visualizados con t-SNE (3D)')
+                ax.set_title('Clusters visualitzats amb t-SNE (3D)')
                 ax.set_xlabel('Dim1')
                 ax.set_ylabel('Dim2')
                 ax.set_zlabel('Dim3')

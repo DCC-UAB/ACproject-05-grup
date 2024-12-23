@@ -2,7 +2,7 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=17348930&assignment_repo_type=AssignmentRepo)
 
 
-Ilias Dachouri - 167 | Bernat Vidal - 1670982 | Joan Colillas - 1670247
+Ilias Dachouri - 1673164 | Bernat Vidal - 1670982 | Joan Colillas - 1670247
 
 
 
@@ -51,7 +51,7 @@ Abans de l'estudi, ens hem formulat dues preguntes que pretenem respondre amb el
 
 - **Quines característiques comparteixen els estudiants amb millor/pitjor estat de salut mental?**
 
-## 4. Requeriments per l'execució
+## 4. Requeriments per l'execució i instruccions
 El codi fa servir llibreries de Machine Learning i de processament de dades les quals necessiten estar instalades en el sistema per que el codi funcioni correctament. 
 En concret es fa servir:
 - numpy
@@ -79,6 +79,11 @@ python <fitxer>.py
 [Linux 🐧]
 python3 <fitxer>.py
 ```
+
+Els fitxers executables es troben dins la carpeta 'scripts' en aquest repositori. No és necessari fer cap modificació adicional per al seu correcte funcionament, però és poden modificar els paràmetres si és que així es desitja.
+
+Els dataframes estàn guardats en format 'pickle' dins la carpeta 'pickles' en aquest repositori, i són importats automàticament quan s'executen els scripts on són requerits. No obstant, també hi ha la opció de importar-los directament del dataset *dataset.csv*, descomentant les línies que indiqui el script. 
+
 ## 5. Algoritmes utilitzats
 Per al nostre cas hem fet servir algoritmes de clusterització per ajuntar els estudiants en diferents grups segons les seves característiques. Així doncs, hem fet servir els següents algoritmes de clustering:
 - Kmeans
@@ -90,5 +95,40 @@ Abans de realitzar el clustering, hem valorat quines variables són més relleva
 - XGBoost (eXtreme Gradient Boosting)
 
 ## 6. Resultats
+Per comprovar i classificar els clústers, hem fet la mitjana de les variables psicològiques de depressió, ansietat i cansament emocional en cada clúster, per després fer la mitjana de mitjanes i obtenir un llindar amb el qual poder separar els estudiants que presenten millors o pitjors estats de salut mental.
+
+La clusterització amb l'algorisme de kmeans i amb el agglomerative han donat pràcticament el mateix resulat de clustering, comparting el mateix valor per a la millor k òptima, que en aqusest cas ha sigut 3. Els tres clústers es poden classificar en:
+    - Clúster amb bon estat de salut mental
+    - Clúster amb estat de salut mental estable
+    - Clúster amb mal estat de salut mental
+
+Amb l'algorisme de gmm hem obtingut un resultat diferent per a la k, en aquest cas de 5, ja que l'algorisme de GMM és més flexible i pot trobar grups amb formes diferents, no només esfèriques com K-means o l'aglomerative. Els resultats han donat que, 3 dels 5 clústers presenten un estat de salut mental pitjor en comparació als altres 2 clústers.
 
 ## 7. Conclusions
+Després d'analitzar els tres algoritmes, podem concluïr en que els algoritmes de kmeans i agglomerative donen donen clústers més diferenciats entre sí, i per tant, amb característiques més identificables.
+En quan a les preguntes que ens havíem formulat al principi, aquestes són les conclusions a les que arribem després de fer l'estudi.
+
+**Quins grups d'estudiants haurien de rebre major suport per a la seva salut mental?**
+Després d'haver fet l'estudi, podem veure que hi ha un grup d'estudiants que realment necessita suport per a la seva salut mental, i aquest grup és el clúster de gent que té, de mitjana, un coeficient major d'ansietat, d'estrès i de cansament emocional.
+
+**Quines característiques comparteixen els estudiants amb millor/pitjor estat de salut mental?**
+En ambdós algoritmes (kmeans i agglomerative) es pot veure que la mitjana dels usuaris del clúster amb pitjor estat de salut mental, entre d'altres, comparteixen unes característiques en comú. 
+- **Situació sentimental:** Tenen parella, però la proporció no és majoritària (55% dels casos).
+- **Poca activitat laboral:** Només un 43% dels estudiants del grup tenen treball remunerat.
+- **Salut física acceptable:** Declaren tenir una salut física moderada, amb una puntuació mitjana de 3.34 sobre 6.
+- **Poca atenció psicològica:** Només el 35% del grup visita regularment un psicòleg o un professional de la salut mental.
+- **Baixa eficiència acadèmica:** Presenten una mitjana baixa d'eficiència acadèmica (19.49 sobre 36), fet que pot reflectir dificultats en la gestió de l'estrès acadèmic o altres factors emocionals.
+
+Els usuari que tenen un millor estat de salut mental comparteixen les següents característiques:
+- **Situació sentimental:** El 68% d’aquests estudiants tenen parella, cosa que podria indicar una possible font de suport emocional.
+- **Activitat laboral moderada:** El 47% del grup té feina remunerada, una proporció lleugerament superior als altres clústers.
+- **Bona salut física:** Declaren una mitjana de salut física de 4.07 sobre 6, per sobre dels altres grups analitzats.
+- **Baixa freqüència de visites psicològiques:** Només el 17% dels estudiants visita regularment un psicòleg o professional de la salut mental, possiblement perquè no perceben una necessitat urgent d’ajuda.
+- **Alta eficiència acadèmica:** Presenten una puntuació mitjana alta en eficiència acadèmica (26.66 sobre 36), indicant un bon rendiment i gestió dels estudis.
+
+En conclusió, els clústers amb valors elevats en les variables psicològiques són els més vulnerables i requereixen suport prioritari, mentre que els estudiants amb millors resultats en salut física, ocupació, eficàcia acadèmica i menys símptomes psicològics mostren un estat més equilibrat i estable.
+
+# 8. Contacte
+- Joan Colillas - 1670247@uab.cat
+- Ilias Dachouri - 1673164@uab.cat
+- Bernat Vidal - 1670982@uab.cat

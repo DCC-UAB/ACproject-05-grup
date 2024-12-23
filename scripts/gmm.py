@@ -31,19 +31,19 @@ IMPORTANT
 # df_no_objectius = df_loaders.load_no_objectius()
 
 # Carregar datasets guardats pickle
-df_file = "pickles/dfs/df.pk1"
+df_file = 'pickles/df.pk1'
 df = pd.read_pickle(df_file)
 
-df_max_scaled_file = "pickles/dfs/df_max_scaled.pk1"
+df_max_scaled_file = 'pickles/df_max_scaled.pk1'
 df_max_scaled = pd.read_pickle(df_max_scaled_file)
 
-df_min_max_scaled_file = "pickles/dfs/df_min_max_scaled.pk1"
+df_min_max_scaled_file = 'pickles/df_min_max_scaled.pk1'
 df_min_max_scaled = pd.read_pickle(df_min_max_scaled_file)
 
-df_final_file = "pickles/dfs/df_final.pk1"
+df_final_file = 'pickles/df_final.pk1'
 df_final = pd.read_pickle(df_final_file)
 
-df_no_objectius_file = "pickles/dfs/df_no_objectius.pk1"
+df_no_objectius_file = 'pickles/df_no_objectius.pk1'
 df_no_objectius = pd.read_pickle(df_no_objectius_file)
 
 # ===============================================================================================
@@ -90,13 +90,13 @@ def gmm(dfs, max_k=10):
 
 c = gmm(df_no_objectius, 8)
 
-# Escollim millor k -> 5
-
-k_def = 5
+# Escollim millor k -> 5 
+ 
+k_def = 5 # Canviar per veure els reusltats d'un clustering amb una k diferent
 
 plots.plot_tsne_clusters(df_no_objectius, c, k_def)
 
-plots.plot_tsne_clusters_2D(df_no_objectius, c, k_def)
+# plots.plot_tsne_clusters_2D(df_no_objectius, c, k_def)
 
 plots.plot_heatmap(df, df_max_scaled, c, ['sex', 'cesd', 'stai_t', 'mbi_ex', 'part', 'year', 'job', 'health', 'psyt', 'mbi_ea'], k_def)
 

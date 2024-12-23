@@ -30,7 +30,7 @@ IMPORTANT
 # df = df_loaders.load_df()
 
 # Carregar dataset guardat pickle
-file = "pickles/dfs/df.pk1"
+file = "pickles/df.pk1"
 df = pd.read_pickle(file)
 
 # ===============================================================================================
