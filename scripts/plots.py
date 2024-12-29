@@ -61,6 +61,7 @@ def plot_sorted_classified_clusters(df_original, clusters, health_variables, k_d
 
 
 def plot_tsne_clusters(df, clusterss, k_def):
+    print(f"Carregant plot tsne 3D amb k = {k_def}")
     df_t = df.copy()
     for k, clusters, _ in clusterss:
             if k == k_def:
@@ -84,6 +85,7 @@ def plot_tsne_clusters(df, clusterss, k_def):
                 plt.show()
 
 def plot_tsne_clusters_2D(df, clusterss, k_def):
+    print(f"Carregant plot tsne 2D amb k = {k_def}")
     df_t = df.copy()
     for k, clusters, _ in clusterss:
         if k == k_def:

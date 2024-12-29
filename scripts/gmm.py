@@ -6,8 +6,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import plots
-import df_loaders
+
+import math
+import time
 '''
 IMPORTANT
  En cas que no funcioni, cal assegurar-se que estem executant el fitxer des de 
@@ -15,7 +16,7 @@ IMPORTANT
  Per comprovar des d'on executem podem fer servir os.getcwd()
  Si en el output es veu que estem executant des de dins d'una carpeta:
     - "c:\\Users\\joanc\\OneDrive\\Desktop\\ACproject-05-grup\\dataset1"
- Podem arreglar-ho descomentant la segÜnet línia del script. Serveix tant per 
+ Podem arreglar-ho descomentant la següent línia del script. Serveix tant per 
  Windows com per Linux.
  Per qualsevol dubte, se'ns pot contactar des dels correus específicats en 
  el README
@@ -23,28 +24,6 @@ IMPORTANT
 # os.chdir('..)
 
 
-# # Carregar dataset des de csv
-# df = df_loaders.load_df()
-# df_max_scaled = df_loaders.load_max_scaled()
-# df_min_max_scaled = df_loaders.load_min_max_scaled()
-# df_final = df_loaders.load_final()
-# df_no_objectius = df_loaders.load_no_objectius()
-
-# Carregar datasets guardats pickle
-df_file = 'pickles/df.pk1'
-df = pd.read_pickle(df_file)
-
-df_max_scaled_file = 'pickles/df_max_scaled.pk1'
-df_max_scaled = pd.read_pickle(df_max_scaled_file)
-
-df_min_max_scaled_file = 'pickles/df_min_max_scaled.pk1'
-df_min_max_scaled = pd.read_pickle(df_min_max_scaled_file)
-
-df_final_file = 'pickles/df_final.pk1'
-df_final = pd.read_pickle(df_final_file)
-
-df_no_objectius_file = 'pickles/df_no_objectius.pk1'
-df_no_objectius = pd.read_pickle(df_no_objectius_file)
 
 # ===============================================================================================
 from sklearn.mixture import GaussianMixture
@@ -87,18 +66,44 @@ def gmm(dfs, max_k=10):
 
     return clusterings
 
+if __name__ == '__main__':
+    import plots
+    import df_loaders
 
-c = gmm(df_no_objectius, 8)
+    # # Carregar dataset des de csv
+    # df = df_loaders.load_df()
+    # df_max_scaled = df_loaders.load_max_scaled()
+    # df_min_max_scaled = df_loaders.load_min_max_scaled()
+    # df_final = df_loaders.load_final()
+    # df_no_objectius = df_loaders.load_no_objectius()
 
-# Escollim millor k -> 5 
- 
-k_def = 5 # Canviar per veure els reusltats d'un clustering amb una k diferent
+    # Carregar datasets guardats pickle
+    df_file = 'pickles/df.pk1'
+    df = pd.read_pickle(df_file)
 
-plots.plot_tsne_clusters(df_no_objectius, c, k_def)
+    df_max_scaled_file = 'pickles/df_max_scaled.pk1'
+    df_max_scaled = pd.read_pickle(df_max_scaled_file)
 
-# plots.plot_tsne_clusters_2D(df_no_objectius, c, k_def)
+    df_min_max_scaled_file = 'pickles/df_min_max_scaled.pk1'
+    df_min_max_scaled = pd.read_pickle(df_min_max_scaled_file)
 
-plots.plot_heatmap(df, df_max_scaled, c, ['sex', 'cesd', 'stai_t', 'mbi_ex', 'part', 'year', 'job', 'health', 'psyt', 'mbi_ea'], k_def)
+    df_final_file = 'pickles/df_final.pk1'
+    df_final = pd.read_pickle(df_final_file)
 
-###
+    df_no_objectius_file = 'pickles/df_no_objectius.pk1'
+    df_no_objectius = pd.read_pickle(df_no_objectius_file)
+
+    c = gmm(df_no_objectius, 8)
+
+    # Escollim millor k -> 5 
+    
+    k_def = 5 # Canviar per veure els reusltats d'un clustering amb una k diferent
+
+    plots.plot_tsne_clusters(df_no_objectius, c, k_def)
+
+    # plots.plot_tsne_clusters_2D(df_no_objectius, c, k_def)
+
+    plots.plot_heatmap(df, df_max_scaled, c, ['sex', 'cesd', 'stai_t', 'mbi_ex', 'part', 'year', 'job', 'health', 'psyt', 'mbi_ea'], k_def)
+
+    ###
 
