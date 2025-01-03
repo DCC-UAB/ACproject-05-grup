@@ -82,7 +82,10 @@ python3 <fitxer>.py
 
 Els fitxers executables es troben dins la carpeta 'scripts' en aquest repositori. No és necessari fer cap modificació adicional per al seu correcte funcionament, però és poden modificar els paràmetres si és que així es desitja.
 
-Els dataframes estàn guardats en format 'pickle' dins la carpeta 'pickles' en aquest repositori, i són importats automàticament quan s'executen els scripts on són requerits. No obstant, també hi ha la opció de importar-los directament del dataset *dataset.csv*, descomentant les línies que indiqui el script. 
+Els dataframes estàn guardats en format 'pickle' dins la carpeta 'pickles' en aquest repositori, i són importats automàticament quan s'executen els scripts on són requerits. No obstant, si es dona error degut a que no s'han trobat els pickles, també hi ha la opció de importar-los directament del dataset *dataset.csv*, descomentant les línies que indiqui el script. 
+
+### IMPORTANT
+Per a executar el main, es necessita com a mínim la versió de **python 3.10**, sino, no es podrà executar.
 
 ## 5. Algoritmes utilitzats
 Per al nostre cas hem fet servir algoritmes de clusterització per ajuntar els estudiants en diferents grups segons les seves característiques. Així doncs, hem fet servir els següents algoritmes de clustering:

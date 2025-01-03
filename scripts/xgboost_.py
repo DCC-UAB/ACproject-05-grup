@@ -16,20 +16,11 @@ from mpl_toolkits.mplot3d import Axes3D
 # ======================================
 # 1. Càrrega de datasets guardats (pickle)
 # ======================================
-df_file = 'pickles/df.pk1'
-df = pd.read_pickle(df_file)
-
-df_max_scaled_file = 'pickles/df_max_scaled.pk1'
-df_max_scaled = pd.read_pickle(df_max_scaled_file)
-
-df_min_max_scaled_file = 'pickles/df_min_max_scaled.pk1'
-df_min_max_scaled = pd.read_pickle(df_min_max_scaled_file)
-
-df_final_file = 'pickles/df_final.pk1'
-df_final = pd.read_pickle(df_final_file)
-
-df_no_objectius_file = 'pickles/df_no_objectius.pk1'
-df_no_objectius = pd.read_pickle(df_no_objectius_file)
+df = pd.read_pickle('pickles/df.pk1')
+df_max_scaled = pd.read_pickle('pickles/df_max_scaled.pk1')
+df_min_max_scaled = pd.read_pickle('pickles/df_min_max_scaled.pk1') 
+df_final = pd.read_pickle('pickles/df_final.pk1')
+df_no_objectius = pd.read_pickle('pickles/df_no_objectius.pk1')
 
 # ======================================
 # 2. Funció: Importància de les variables amb XGBoost

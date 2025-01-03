@@ -83,25 +83,47 @@ def entrenar_i_avaluar_model(model, model_name, X_train, X_test, y_train, y_test
 
 match int(input('''
 Escull una opció:
-    1. Feature Importance
+    1. Classificació
     2. Clustering
                -> ''')):
-    case 1:
-        match int(input('''
-[Has escollit: Feature Importance]
-    Escull quin algorisme vols fer servir:
-        1. Random Forest
-        2. XGBoost
-                -> ''')):
-            case 1: # Random Forest
-                ...
-            
-            case 2: # XGBoost
-                ...
+    case 1: # Classificació
+        # Preprocessament
+        scaler = StandardScaler()
+        target = ['cesd', 'stai_t', 'mbi_ex']
+        X = df_no_objectius
+        y = (df[target].mean(axis=1) > df[target].mean(axis=1).median()).astype(int)
+        X_scaled = scaler.fit_transform(X)
+        X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, stratify=y, random_state=42)
 
-    case 2:
+        # Entrenament i avaluació de models
+        models = {
+            "Regressió Logística": LogisticRegression(max_iter=1000, random_state=42),
+            "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42),
+            "XGBoost": XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42),
+        }
+
+        metrics = {}
+        for name, model in models.items():
+            metrics[name] = entrenar_i_avaluar_model(model, name, X_train, X_test, y_train, y_test)
+
+        # Comparació de models
+        metrics_df = pd.DataFrame(metrics).T
+        print("\nComparació de mètriques:")
+        print(metrics_df)
+
+        # Gràfic comparatiu
+        metrics_df.plot(kind="bar", figsize=(10, 6), colormap="viridis", edgecolor="black")
+        plt.title("Comparació de Métriques entre Models")
+        plt.xlabel("Model")
+        plt.ylabel("Puntuació")
+        plt.xticks(rotation=0)
+        plt.legend(loc="lower right")
+        plt.grid(axis="y", linestyle="--", alpha=0.7)
+        plt.tight_layout()
+        plt.show()
+
+    case 2: # Clustering
         match int(input('''
-[Has escollit: Clustering]
     Escull quin algorisme vols fer servir:
         1. Kmeans
         2. Gmm (Gaussian Mixture Model)
@@ -160,84 +182,3 @@ Variables i característiques:
                     print(f"La opció [{inp}] no es troba en el dataset")
             
         plot_heatmap(df, df_min_max_scaled, c, l_features, k)
-
-
-#millores de les opcions amb feature importance, classificacio i clustering
-match int(input('''
-Escull una opció:
-    1. Feature Importance
-    2. Clustering
-    3. Classificació
-               -> ''')):
-    case 1:  # Feature Importance
-        match int(input('''
-[Has escollit: Feature Importance]
-    Escull quin algorisme vols fer servir:
-        1. Random Forest
-        2. XGBoost
-                -> ''')):
-            case 1:  # Random Forest
-                ...
-            case 2:  # XGBoost
-                ...
-
-    case 2:  # Clustering
-        match int(input('''
-[Has escollit: Clustering]
-    Escull quin algorisme vols fer servir:
-        1. Kmeans
-        2. Gmm (Gaussian Mixture Model)
-        3. Agglomerative Clustering
-                -> ''')):
-            case 1:  # Kmeans
-                c = kmeans(df_no_objectius, 8)
-                k = int(input("La millor k és 3. Quina k vols fer servir per a les visualitzacions? -> "))
-            case 2:  # Gmm
-                c = gmm(df_no_objectius, 8)
-                k = int(input("La millor k és 5. Quina k vols fer servir per a les visualitzacions? -> "))
-            case 3:  # Agglomerative
-                c = agglomerative_clustering(df_no_objectius, 8)
-                k = int(input("La millor k és 3. Quina k vols fer servir per a les visualitzacions? -> "))
-        if input("Vols visualitzar els clústers? S/n -> ") in ('S', 's'):
-            plot_tsne_clusters_2D(df_no_objectius, c, k)
-            plot_tsne_clusters(df_no_objectius, c, k)
-
-        if input("Vols visualitzar les característiques de cada clúster? S/n -> ") in ('S', 's'):
-            plot_sorted_classified_clusters(df, c, ['cesd', 'stai_t', 'mbi_ex'], k)
-    
-    case 3:  # Classificació
-        # Preprocessament
-        scaler = StandardScaler()
-        target = ['cesd', 'stai_t', 'mbi_ex']
-        X = df_no_objectius
-        y = (df[target].mean(axis=1) > df[target].mean(axis=1).median()).astype(int)
-        X_scaled = scaler.fit_transform(X)
-        X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, stratify=y, random_state=42)
-
-        # Entrenament i avaluació de models
-        models = {
-            "Regressió Logística": LogisticRegression(max_iter=1000, random_state=42),
-            "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42),
-            "XGBoost": XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42),
-        }
-
-        metrics = {}
-        for name, model in models.items():
-            metrics[name] = entrenar_i_avaluar_model(model, name, X_train, X_test, y_train, y_test)
-
-        # Comparació de models
-        metrics_df = pd.DataFrame(metrics).T
-        print("\nComparació de mètriques:")
-        print(metrics_df)
-
-        # Gràfic comparatiu
-        metrics_df.plot(kind="bar", figsize=(10, 6), colormap="viridis", edgecolor="black")
-        plt.title("Comparació de Métriques entre Models")
-        plt.xlabel("Model")
-        plt.ylabel("Puntuació")
-        plt.xticks(rotation=0)
-        plt.legend(loc="lower right")
-        plt.grid(axis="y", linestyle="--", alpha=0.7)
-        plt.tight_layout()
-        plt.show()
-

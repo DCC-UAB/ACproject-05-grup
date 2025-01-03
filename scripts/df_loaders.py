@@ -5,13 +5,24 @@ i estandaritzades segons calgui. Dediquem un fitxer a
 fer-ho per evitar redundància a la hora de reescriure 
 el codi de la creació de dataframes.
 '''
-
+import os
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 def load_df():
     file = "dataset.csv"
-    dataset = pd.read_csv(file)
+    
+    if os.path.exists(file):
+        dataset_path = file
+    else:
+        parent_dir = os.path.dirname(os.getcwd())
+        dataset_path = os.path.join(parent_dir, file)
+        
+        if not os.path.exists(dataset_path):
+            raise FileNotFoundError(f"No s'ha trobat el fitxer '{file}' ni al directori actual ni al directori pare.")
+
+    # Carregar el dataset
+    dataset = pd.read_csv(dataset_path)
     df = dataset.drop(['id', 'amsp'], axis=1)
     return df
 
@@ -52,13 +63,6 @@ def load_min_max_scaled():
     for column in df_min_max_scaled.columns: 
         df_min_max_scaled[column] = (df_min_max_scaled[column] - df_min_max_scaled[column].min()) / (df_min_max_scaled[column].max() - df_min_max_scaled[column].min())
     return df_min_max_scaled
-
-# def load_no_objectius():
-#     df_final = load_final()
-#     return df_final[['year', 'stud_h', 'health', 'sex_1', 'sex_2', 'sex_3', 'age', 
-#                'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean', 'mbi_ea', 'part', 
-#                'job', 'psyt', 'mbi_cy'
-#         ]]
 
 def load_no_objectius():
     df_final = load_final()

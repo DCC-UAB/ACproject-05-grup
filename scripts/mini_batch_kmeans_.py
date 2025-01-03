@@ -32,7 +32,6 @@ from sklearn.metrics import silhouette_score
 def mini_batch_kmeans(dfs, max_k=10):
     df_t = dfs.copy()
 
-    # Store inertia values and clustering results for plotting
     inertia = []
     clusterings = []
 
@@ -58,10 +57,6 @@ def mini_batch_kmeans(dfs, max_k=10):
     # Silhouette 
     print("Best k silhouette:", sil_best_k)
 
-    # Plot clustering results for each k, 2 plots per row
-    num_plots = len(clusterings)
-    num_cols = 2
-
     plt.figure(figsize=(8, 6))
     k_values = range(2, max_k + 1)
     plt.plot(k_values, inertia, marker='o', linestyle='--')
@@ -84,20 +79,11 @@ if __name__ == '__main__':
     # df_no_objectius = df_loaders.load_no_objectius()
 
     # Carregar datasets guardats pickle
-    df_file = 'pickles/df.pk1'
-    df = pd.read_pickle(df_file)
-
-    df_max_scaled_file = 'pickles/df_max_scaled.pk1'
-    df_max_scaled = pd.read_pickle(df_max_scaled_file)
-
-    df_min_max_scaled_file = 'pickles/df_min_max_scaled.pk1'
-    df_min_max_scaled = pd.read_pickle(df_min_max_scaled_file)
-
-    df_final_file = 'pickles/df_final.pk1'
-    df_final = pd.read_pickle(df_final_file)
-
-    df_no_objectius_file = 'pickles/df_no_objectius.pk1'
-    df_no_objectius = pd.read_pickle(df_no_objectius_file)
+    df = pd.read_pickle('pickles/df.pk1')
+    df_max_scaled = pd.read_pickle('pickles/df_max_scaled.pk1')
+    df_min_max_scaled = pd.read_pickle('pickles/df_min_max_scaled.pk1') 
+    df_final = pd.read_pickle('pickles/df_final.pk1')
+    df_no_objectius = pd.read_pickle('pickles/df_no_objectius.pk1')
 
     c = mini_batch_kmeans(df_no_objectius, 8)
 
