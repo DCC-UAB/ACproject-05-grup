@@ -118,10 +118,10 @@ def entrenar_logistic_regression(X, y):
 # ======================================
 if __name__ == "__main__":
     # Variables
-    variables_psicologiques = ['cesd', 'stai_t', 'mbi_ex', 'mbi_cy']
+    variables_psicologiques = ['cesd', 'stai_t', 'mbi_ex']
     variables_academiques = ['year','health']
     variables_binàries = ['part', 'job', 'psyt']
-    variables_numeriques = ['stud_h','age', 'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean', 'mbi_ea']
+    variables_numeriques = ['stud_h','age', 'jspe', 'qcae_cog', 'qcae_aff', 'erec_mean', 'mbi_ea', 'mbi_cy']
 
     # Crear índex de salut mental
     df['mental_health_index'] = df[variables_psicologiques].mean(axis=1)
@@ -144,24 +144,15 @@ if __name__ == "__main__":
     print("=== Importància de Variables No Psicològiques ===")
     calcular_importancia_xgboost(X_no_psicologiques, y, title="Importància de Variables No Psicològiques")
 
-    # 5.2 Separació per sexe
-    for sexe, label in [(1, "Homes"), (2, "Dones")]:
-        df_sexe = df[df['sex'] == sexe]
-        X_sexe = pd.DataFrame(scaler.fit_transform(df_sexe[variables_academiques + variables_numeriques + variables_binàries]),
-                              columns=variables_academiques + variables_numeriques + variables_binàries)
-        y_sexe = df_sexe['mental_health_status']
-        print(f"=== Importància de Variables per Sexe: {label} ===")
-        calcular_importancia_xgboost(X_sexe, y_sexe, title=f"Importància per Sexe: {label}")
-
-    # 5.3 Clustering amb t-SNE i KMeans
+    # 5.2 Clustering amb t-SNE i KMeans
     print("=== Clustering amb KMeans ===")
     tsne_clusters = tsne_clustering(X_psicologiques, n_clusters=3, method="KMeans")
     print("=== Clustering amb GMM ===")
     tsne_clusters = tsne_clustering(X_psicologiques, n_clusters=3, method="GMM")
 
-    # 5.4 Densitat de variables psicològiques per clúster
+    # 5.3 Densitat de variables psicològiques per clúster
     calcular_densitat_clusters(df, tsne_clusters['Cluster'], variables_psicologiques)
 
-    # 5.5 Entrenar Regressió Logística
+    # 5.4 Entrenar Regressió Logística
     print("=== Entrenament de Regressió Logística ===")
     entrenar_logistic_regression(X, y)
