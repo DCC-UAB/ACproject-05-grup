@@ -14,7 +14,7 @@ Aquest projecte té com l'objectiu d'analitzar l'estat de salut mental d'un grup
 ## 2. Exploració, tractament i adaptació del Dataset
 El [dataset](https://www.kaggle.com/code/faressayadi/medical-student-health-analysis-fares-sayadi/input) escollit  recull un conjunt de dades personals dels estudiants, com el seu gènere, variables relacionats amb el seu dia a dia, com poden ser el fet de si tenen parella o no, si treballen etc. juntament amb variables que descriuen diversos factors relacionats amb el seu estat mental, com el seu nivell d'ansietat o de depressió.
 
-En concret tenim 886 registres després d'haver realitzat la neteja prèvia al dataset, i cada registre compta amb 20 variables, de les quals n'utilitzarem 18 per fer el clustering. S'han eliminat les variables de *id*, ja que no tenen cap rellevància per al clustering, i la variable *amsp*, ja que no es descriu enlloc de què tracta.
+En concret tenim 886 registres després d'haver realitzat la neteja prèvia al dataset, i cada registre compta amb 20 variables, de les quals n'utilitzarem 13 per fer el clustering. S'han eliminat les variables de *id*, ja que no tenen cap rellevància per al clustering, i la variable *amsp*, ja que no es descriu enlloc de què tracta.
 
 Dins el dataset ens trobem amb variables numèriques i categòriques ordinals i nominals amb diferents rangs de treball. Així doncs, hem cregut necesàri aplicar una série de modificacions per tal d'obtenir el millor resultat en el clustering.
 
@@ -82,7 +82,7 @@ python3 <fitxer>.py
 
 Els fitxers executables es troben dins la carpeta 'scripts' en aquest repositori. No és necessari fer cap modificació adicional per al seu correcte funcionament, però és poden modificar els paràmetres si és que així es desitja.
 
-Els dataframes estàn guardats en format 'pickle' dins la carpeta 'pickles' en aquest repositori, i són importats automàticament quan s'executen els scripts on són requerits. No obstant, si es dona error degut a que no s'han trobat els pickles, també hi ha la opció de importar-los directament del dataset *dataset.csv*, descomentant les línies que indiqui el script. 
+Els dataframes estàn guardats en format 'pickle' dins la carpeta 'pickles' en aquest repositori, i són importats automàticament quan s'executen els scripts on són requerits. No obstant, **si es dona error** degut a que no s'han trobat els pickles, també hi ha la opció de importar-los directament del dataset *dataset.csv*, comentant els importadors pickle, i descomentant les línies de codi que importin de nou els dataframes utilitzant la llibreria *df_loaders*.
 
 ### IMPORTANT
 Per a executar el main, es necessita com a mínim la versió de **python 3.10**, sino, no es podrà executar.

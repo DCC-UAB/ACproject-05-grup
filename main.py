@@ -181,4 +181,4 @@ Variables i característiques:
                 else:
                     print(f"La opció [{inp}] no es troba en el dataset")
             
-        plot_heatmap(df, df_min_max_scaled, c, l_features, k)
+            plot_heatmap(df, df_min_max_scaled, c, l_features, k)

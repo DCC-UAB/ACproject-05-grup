@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
     k_def = 3 # Canviar per veure els resultats d'un clustering amb una k diferent
 
-    # plots.plot_tsne_clusters(df_no_objectius, c, k_def)
+    plots.plot_tsne_clusters(df_no_objectius, c, k_def)
 
     plots.plot_heatmap(df, df_min_max_scaled, c, ['cesd', 'stai_t', 'mbi_ex', 'mbi_cy', 'psyt', 'part', 'year', 'job', 'health', 'qcae_cog', 'stud_h', 'mbi_ea'], k_def)
 
