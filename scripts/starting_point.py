@@ -233,11 +233,15 @@ df_num_scaled = scaler.fit_transform(df_num)
 # Create a PCA instance: pca
 pca = PCA(n_components=0.95)
 
+
 # Fit the PCA instance to the scaled samples
 pca.fit(df_num_scaled)
 
+print("VARIANCE:", pca.explained_variance_ratio_)
+
 # Transform the scaled samples: pca_features
 pca_features = pca.transform(df_num_scaled)
+
 
 # Print the shape of pca_features
 print("The shape of the pca is : ", pca_features.shape)

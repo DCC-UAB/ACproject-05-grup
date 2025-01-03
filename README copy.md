@@ -6,7 +6,7 @@ Ilias Dachouri - 1673164 | Bernat Vidal - 1670982 | Joan Colillas - 1670247
 
 
 
-# **Anàlisi i clusterització de la salut mental dels estudiants mitjançant Machine Learning**
+# Anàlisi i clusterització de la salut mental dels estudiants mitjançant Machine Learning
 
 ## 1. Descripció del projecte
 Aquest projecte té com l'objectiu d'analitzar l'estat de salut mental d'un grup d'estudiants mitjançant tècniques de Machine Learning. Utilitzarem algorismes de clusterització per agrupar els estudiants en funció de les seves característiques individuals, identificant així patrons i tendències originalment amagats que puguin ser indicatius de diferents estats mentals. Amb aquest anàlisi, es pretén identificar quins grups d'estudiants necessiten més atenció i suport, per tal de dissenyar intervencions més eficients per millorar la seva salut mental. Un cop acabat l'estudi, l'objectiu final és proporcionar recomanacions específiques per a la millora de la salut mental dels estudiants, amb un enfocament personalitzat en funció dels seus perfils.
@@ -18,38 +18,38 @@ En concret tenim 886 registres després d'haver realitzat la neteja prèvia al d
 
 Dins el dataset ens trobem amb variables numèriques i categòriques ordinals i nominals amb diferents rangs de treball. Així doncs, hem cregut necesàri aplicar una série de modificacions per tal d'obtenir el millor resultat en el clustering.
 
-Hem normalitzat i estandaritzat les **variables numèriques** i les **variables categòriques ordinals** (amb ordre) per tal d'assegur que tinguin el mateix rang i evitar que unes variables tinguin més influència que d'altres, fet el qual és especialment important en algoritmes de clustering (com Kmeans) ja que es basen en la distància euclidiana, i una diferència en l'escala pot afectar negativament als resultats.
+Hem normalitzat i estandaritzat les variables numèriques i les variables categòriques ordinals (amb ordre) per tal d'assegur que tinguin el mateix rang i evitar que unes variables tinguin més influència que d'altres, fet el qual és especialment important en algoritmes de clustering (com Kmeans) ja que es basen en la distància euclidiana, i una diferència en l'escala pot afectar negativament als resultats.
 
-Per tractar les **variables categòriques nominals** (sense ordre) hem fet servir un one-hot encoder per separar les seves categories en diferents variables binàries, de manera que cada cateogira es converteix en una nova columna amb valors de 0 o 1.
+Per tractar les variables categòriques nominals (sense ordre) hem fet servir un one-hot encoder per separar les seves categories en diferents variables binàries, de manera que cada cateogira es converteix en una nova columna amb valors de 0 o 1.
 
-### **- Variables categòriques:**
-* **sex**: gènere *[1 -> Home | 2 -> Dona | 3 -> No binari]*
-* **year**: any acadèmic *[1 -> Bmed1 | 2 -> Bmed2 | 3 -> Bmed3 | 4 -> Mmed1 | 5 -> Mmed2 | 6 -> Mmed3]*
-* **part**: parella *[1 -> Si | 0 -> No]*
-* **job**:   treball *[1 -> Si | 0 -> No]*
-* **psyt**:  s'ha consultat un psicòleg en els últims 12 mesos? *[0 -> No | 1 -> Si]*
-* **glang**: llengua materna *[1 -> Francès | 15 -> Alemany | 53 -> Català...]*
-* **health**: nivell de satisfacció amb la salut *[1 -> Molt Baix | 5 -> Molt alt]*
-* **stud_h**: hores d'estudi per setmana
+### - Variables categòriques:
+sex: gènere [1 -> Home | 2 -> Dona | 3 -> No binari]
+year: any acadèmic [1 -> Bmed1 | 2 -> Bmed2 | 3 -> Bmed3 | 4 -> Mmed1 | 5 -> Mmed2 | 6 -> Mmed3]
+part: parella [1 -> Si | 0 -> No]
+job:   treball [1 -> Si | 0 -> No]
+psyt:  s'ha consultat un psicòleg en els últims 12 mesos? [0 -> No | 1 -> Si]
+glang: llengua materna [1 -> Francès | 15 -> Alemany | 53 -> Català...]
+health: nivell de satisfacció amb la salut [1 -> Molt Baix | 5 -> Molt alt]
+stud_h: hores d'estudi per setmana
 
-### **- Variables numèriques:**
-* **age**: edat *[17 - 49]*
-* **jspe**: nivell d'emapatía *[67 - 125]*
-* **qcae_cog**: nivell cognitiu *[37 - 76]*
-* **qcae_aff**: nivell d'afecció *[18 - 48]*
-* **erec_mean**: percentatge total de respostes correctes en el GERT, un test on s'avalua si les persones poden reconeixer les emocions basant-se en llenguatge no verbal *[0.35 - 0.95]*
-* **cesd**: escala de depressió *[0 - 56]*
-* **stai_t**: escala d'ansietat *[20 - 77]*
-* **mbi_ex**: cansament emocional *[5- 30]*
-* **mbi_cy**: cinisme -> Mesura que tant distant una persona se sent respecte el seu voltant *[4 - 24]*
-* **mbi_ea**: eficàcia acadèmica *[10 - 36]*
+### - Variables numèriques:
+age: edat [17 - 49]
+jspe: nivell d'emapatía [67 - 125]
+qcae_cog: nivell cognitiu [37 - 76]
+qcae_aff: nivell d'afecció [18 - 48]
+erec_mean: percentatge total de respostes correctes en el GERT, un test on s'avalua si les persones poden reconeixer les emocions basant-se en llenguatge no verbal [0.35 - 0.95]
+cesd: escala de depressió [0 - 56]
+stai_t: escala d'ansietat [20 - 77]
+mbi_ex: cansament emocional [5- 30]
+mbi_cy: cinisme -> Mesura que tant distant una persona se sent respecte el seu voltant [4 - 24]
+mbi_ea: eficàcia acadèmica [10 - 36]
 
 ## 3. Preguntes formulades
 Abans de l'estudi, ens hem formulat dues preguntes que pretenem respondre amb els resultats obtinguts, i en l'apartat de conclusions al finalitzar el projete:  
 
--  **Quins grups d'estudiants haurien de rebre major suport per a la seva salut mental?**
+-  Quins grups d'estudiants haurien de rebre major suport per a la seva salut mental?
 
-- **Quines característiques comparteixen els estudiants amb millor/pitjor estat de salut mental?**
+- Quines característiques comparteixen els estudiants amb millor/pitjor estat de salut mental?
 
 ## 4. Requeriments per l'execució i instruccions
 El codi fa servir llibreries de Machine Learning i de processament de dades les quals necessiten estar instalades en el sistema per que el codi funcioni correctament. 
@@ -108,23 +108,23 @@ Amb l'algorisme de gmm hem obtingut un resultat diferent per a la k, en aquest c
 Després d'analitzar els tres algoritmes, podem concluïr en que els algoritmes de kmeans i agglomerative donen donen clústers més diferenciats entre sí, i per tant, amb característiques més identificables.
 En quan a les preguntes que ens havíem formulat al principi, aquestes són les conclusions a les que arribem després de fer l'estudi.
 
-**Quins grups d'estudiants haurien de rebre major suport per a la seva salut mental?**
+Quins grups d'estudiants haurien de rebre major suport per a la seva salut mental?
 Després d'haver fet l'estudi, podem veure que hi ha un grup d'estudiants que realment necessita suport per a la seva salut mental, i aquest grup és el clúster de gent que té, de mitjana, un coeficient major d'ansietat, d'estrès i de cansament emocional.
 
-**Quines característiques comparteixen els estudiants amb millor/pitjor estat de salut mental?**
+Quines característiques comparteixen els estudiants amb millor/pitjor estat de salut mental?
 En ambdós algoritmes (kmeans i agglomerative) es pot veure que la mitjana dels usuaris del clúster amb pitjor estat de salut mental, entre d'altres, comparteixen unes característiques en comú. 
-- **Situació sentimental:** Tenen parella, però la proporció no és majoritària (55% dels casos).
-- **Poca activitat laboral:** Només un 43% dels estudiants del grup tenen treball remunerat.
-- **Salut física acceptable:** Declaren tenir una salut física moderada, amb una puntuació mitjana de 3.34 sobre 6.
-- **Poca atenció psicològica:** Només el 35% del grup visita regularment un psicòleg o un professional de la salut mental.
-- **Baixa eficiència acadèmica:** Presenten una mitjana baixa d'eficiència acadèmica (19.49 sobre 36), fet que pot reflectir dificultats en la gestió de l'estrès acadèmic o altres factors emocionals.
+- Situació sentimental: Tenen parella, però la proporció no és majoritària (55% dels casos).
+- Poca activitat laboral: Només un 43% dels estudiants del grup tenen treball remunerat.
+- Salut física acceptable: Declaren tenir una salut física moderada, amb una puntuació mitjana de 3.34 sobre 6.
+- Poca atenció psicològica: Només el 35% del grup visita regularment un psicòleg o un professional de la salut mental.
+- Baixa eficiència acadèmica: Presenten una mitjana baixa d'eficiència acadèmica (19.49 sobre 36), fet que pot reflectir dificultats en la gestió de l'estrès acadèmic o altres factors emocionals.
 
 Els usuari que tenen un millor estat de salut mental comparteixen les següents característiques:
-- **Situació sentimental:** El 68% d’aquests estudiants tenen parella, cosa que podria indicar una possible font de suport emocional.
-- **Activitat laboral moderada:** El 47% del grup té feina remunerada, una proporció lleugerament superior als altres clústers.
-- **Bona salut física:** Declaren una mitjana de salut física de 4.07 sobre 6, per sobre dels altres grups analitzats.
-- **Baixa freqüència de visites psicològiques:** Només el 17% dels estudiants visita regularment un psicòleg o professional de la salut mental, possiblement perquè no perceben una necessitat urgent d’ajuda.
-- **Alta eficiència acadèmica:** Presenten una puntuació mitjana alta en eficiència acadèmica (26.66 sobre 36), indicant un bon rendiment i gestió dels estudis.
+- Situació sentimental: El 68% d’aquests estudiants tenen parella, cosa que podria indicar una possible font de suport emocional.
+- Activitat laboral moderada: El 47% del grup té feina remunerada, una proporció lleugerament superior als altres clústers.
+- Bona salut física: Declaren una mitjana de salut física de 4.07 sobre 6, per sobre dels altres grups analitzats.
+- Baixa freqüència de visites psicològiques: Només el 17% dels estudiants visita regularment un psicòleg o professional de la salut mental, possiblement perquè no perceben una necessitat urgent d’ajuda.
+- Alta eficiència acadèmica: Presenten una puntuació mitjana alta en eficiència acadèmica (26.66 sobre 36), indicant un bon rendiment i gestió dels estudis.
 
 En conclusió, els clústers amb valors elevats en les variables psicològiques són els més vulnerables i requereixen suport prioritari, mentre que els estudiants amb millors resultats en salut física, ocupació, eficàcia acadèmica i menys símptomes psicològics mostren un estat més equilibrat i estable.
 

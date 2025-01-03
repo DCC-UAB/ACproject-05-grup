@@ -38,6 +38,7 @@ def kmeans(dfs, max_k=10):
     sil_best_score = -1
     sil_best_k = 2
 
+    beg = time.time()
     for k in range(2, max_k + 1):
         model = KMeans(n_clusters=k, random_state=42, n_init=10)
         clusters = model.fit_predict(df_t)
@@ -53,7 +54,7 @@ def kmeans(dfs, max_k=10):
         inertia.append(model.inertia_)
         cluster_centers = model.cluster_centers_
         clusterings.append((k, clusters, cluster_centers))
-
+    print(f"Acabat en {time.time() - beg} segons")
     # Silhouette 
     print("Millor k silhouette:", sil_best_k)
 
@@ -71,6 +72,7 @@ def kmeans(dfs, max_k=10):
 
 if __name__ == '__main__':
     import plots
+    import df_loaders
     # # Carregar dataset des de csv
     # df = df_loaders.load_df()
     # df_max_scaled = df_loaders.load_max_scaled()
@@ -100,6 +102,8 @@ if __name__ == '__main__':
 
     k_def = 3 # Canviar per veure els resultats d'un clustering amb una k diferent
 
-    plots.plot_tsne_clusters(df_no_objectius, c, k_def)
+    # plots.plot_tsne_clusters(df_no_objectius, c, k_def)
 
-    plots.plot_heatmap(df, df_min_max_scaled, c, ['sex', 'cesd', 'stai_t', 'mbi_ex', 'part', 'year', 'job', 'health', 'psyt', 'mbi_ea'], k_def)
+    plots.plot_heatmap(df, df_min_max_scaled, c, ['cesd', 'stai_t', 'mbi_ex', 'mbi_cy', 'psyt', 'part', 'year', 'job', 'health', 'qcae_cog', 'stud_h', 'mbi_ea'], k_def)
+
+    plots.plot_sorted_classified_clusters(df, c, ['cesd', 'stai_t', 'mbi_ex'], k_def)

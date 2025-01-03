@@ -1,6 +1,6 @@
 '''
 En aquest fitxer executem i visualitzem l'algorisme de
-clustering Agglomerative
+clustering mini-batch kmeans
 '''
 import pandas as pd
 import numpy as np
@@ -23,48 +23,51 @@ IMPORTANT
  Per qualsevol dubte, se'ns pot contactar des dels correus específicats en 
  el README
  '''
-# os.chdir('..)
+# os.chdir('..)    
 
 # ===============================================================================================
-from sklearn.cluster import AgglomerativeClustering
+from sklearn.cluster import MiniBatchKMeans
 from sklearn.metrics import silhouette_score
 
-def agglomerative_clustering(dfs, max_k=10):
+def mini_batch_kmeans(dfs, max_k=10):
     df_t = dfs.copy()
 
-    sil_scores = []
+    # Store inertia values and clustering results for plotting
+    inertia = []
     clusterings = []
 
     sil_best_score = -1
     sil_best_k = 2
-
+    size_batch = int(dfs.shape[0]/2)
+    beg = time.time()
     for k in range(2, max_k + 1):
-        # Crear el model d'Agglomerative Clustering
-        model = AgglomerativeClustering(n_clusters=k)
+        model = MiniBatchKMeans(n_clusters=k, random_state=42, batch_size=size_batch, max_iter=100)
         clusters = model.fit_predict(df_t)
         
-        # Silhouette score
+        # Silhouette
         if k > 2:
             score = silhouette_score(df_t, clusters)
-            sil_scores.append(score)
             if score > sil_best_score:
                 sil_best_score = score
                 sil_best_k = k
-        else:
-            sil_scores.append(None)  # per k = 2 no es fa el calcul
+        
+        inertia.append(model.inertia_)
+        cluster_centers = model.cluster_centers_
+        clusterings.append((k, clusters, cluster_centers))
+    print(f"Acabat en {time.time() - beg} seogns")
+    # Silhouette 
+    print("Best k silhouette:", sil_best_k)
 
-        clusterings.append((k, clusters, 0))
+    # Plot clustering results for each k, 2 plots per row
+    num_plots = len(clusterings)
+    num_cols = 2
 
-    # Mostrar el millor k segons silhouette score
-    print("Millor k silhouette:", sil_best_k)
-
-    # Gràfic del Silhouette score per cada k
     plt.figure(figsize=(8, 6))
     k_values = range(2, max_k + 1)
-    plt.plot(k_values, sil_scores, marker='o', linestyle='--')
+    plt.plot(k_values, inertia, marker='o', linestyle='--')
     plt.xlabel('Number of Clusters (k)')
-    plt.ylabel('Silhouette Score')
-    plt.title('Silhouette Score per a diferents k')
+    plt.ylabel('Inertia (Within-Cluster Sum of Squares)')
+    plt.title('Elbow Method for Optimal k')
     plt.xticks(k_values)
     plt.grid(True)
     plt.show()
@@ -73,8 +76,6 @@ def agglomerative_clustering(dfs, max_k=10):
 
 if __name__ == '__main__':
     import plots
-    import df_loaders
-
     # # Carregar dataset des de csv
     # df = df_loaders.load_df()
     # df_max_scaled = df_loaders.load_max_scaled()
@@ -98,12 +99,11 @@ if __name__ == '__main__':
     df_no_objectius_file = 'pickles/df_no_objectius.pk1'
     df_no_objectius = pd.read_pickle(df_no_objectius_file)
 
-
-    c = agglomerative_clustering(df_no_objectius, 8)
+    c = mini_batch_kmeans(df_no_objectius, 8)
 
     # Escollim millor k -> 3
 
-    k_def = 3 # Canviar per veure els reusltats d'un clustering amb una k diferent
+    k_def = 3 # Canviar per veure els resultats d'un clustering amb una k diferent
 
     plots.plot_tsne_clusters(df_no_objectius, c, k_def)
 
