@@ -15,6 +15,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, roc_curve, auc, classification_report
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
+import xgboost as xgb
 from xgboost import XGBClassifier
 import matplotlib.pyplot as plt
 
@@ -85,6 +87,7 @@ match int(input('''
 Escull una opció:
     1. Classificació
     2. Clustering
+    3. Importància de les característiques
                -> ''')):
     case 1: # Classificació
         # Preprocessament
@@ -182,3 +185,84 @@ Variables i característiques:
                     print(f"La opció [{inp}] no es troba en el dataset")
             
             plot_heatmap(df, df_min_max_scaled, c, l_features, k)
+
+    case 3:  # Importància de les característiques
+        match int(input('''
+[Has escollit: Importància de les característiques]
+    Escull quin algorisme vols fer servir:
+        1. Random Forest Regressor
+        2. XGBoost
+               -> ''')):
+            case 1:  # Random Forest Regressor
+                # Variables no psicològiques i psicològiques menys importants
+                variables_no_psicologiques = ['age', 'year', 'part', 'job', 'stud_h', 'health', 'psyt']
+                variables_psicologiques_menys_importants = ['mbi_ea', 'jspe', 'mbi_cy', 'qcae_cog', 'qcae_aff', 'erec_mean']
+                
+                # Gràfic només amb variables no psicològiques
+                X_non_psych = df[variables_no_psicologiques]
+                y = df[['cesd', 'stai_t', 'mbi_ex']].mean(axis=1)  # Índex psicològic combinat
+
+                X_train, X_test, y_train, y_test = train_test_split(X_non_psych, y, test_size=0.2, random_state=42)
+
+                model_rf = RandomForestRegressor(random_state=42)
+                model_rf.fit(X_train, y_train)
+                importances = model_rf.feature_importances_
+
+                plt.figure(figsize=(10, 6))
+                plt.barh(X_non_psych.columns, importances, color='skyblue')
+                plt.xlabel("Importància de les característiques")
+                plt.title("Variables No Psicològiques (Random Forest Regressor)")
+                plt.show()
+
+                # Gràfic amb variables no psicològiques + menys importants psicològiques
+                variables_combined = variables_no_psicologiques + variables_psicologiques_menys_importants
+                X_combined = df[variables_combined]
+
+                X_train, X_test, y_train, y_test = train_test_split(X_combined, y, test_size=0.2, random_state=42)
+                model_rf.fit(X_train, y_train)
+                importances_combined = model_rf.feature_importances_
+
+                plt.figure(figsize=(10, 6))
+                plt.barh(variables_combined, importances_combined, color='coral')
+                plt.xlabel("Importància de les característiques")
+                plt.title("Variables No Psicològiques + Psicològiques Menys Importants (Random Forest Regressor)")
+                plt.show()
+
+            case 2:  # XGBoost
+                # Variables no psicològiques i psicològiques menys importants
+                variables_no_psicologiques = ['age', 'year', 'part', 'job', 'stud_h', 'health', 'psyt']
+                variables_psicologiques_menys_importants = ['mbi_ea', 'mbi_cy', 'qcae_cog', 'qcae_aff', 'erec_mean']
+
+                # Gràfic només amb variables no psicològiques
+                X_non_psych = df[variables_no_psicologiques]
+                y = df[['cesd', 'stai_t', 'mbi_ex']].mean(axis=1)  # Índex psicològic combinat
+
+                scaler = StandardScaler()
+                X_non_psych_scaled = pd.DataFrame(scaler.fit_transform(X_non_psych), columns=X_non_psych.columns)
+
+                X_train, X_test, y_train, y_test = train_test_split(X_non_psych_scaled, y, test_size=0.2, random_state=42)
+
+                model_xgb = xgb.XGBRegressor(random_state=42)
+                model_xgb.fit(X_train, y_train)
+                importances_xgb = model_xgb.feature_importances_
+
+                plt.figure(figsize=(10, 6))
+                plt.barh(X_non_psych.columns, importances_xgb, color='skyblue')
+                plt.xlabel("Importància de les característiques")
+                plt.title("Variables No Psicològiques (XGBoost)")
+                plt.show()
+
+                # Gràfic amb variables no psicològiques + menys importants psicològiques
+                variables_combined = variables_no_psicologiques + variables_psicologiques_menys_importants
+                X_combined = df[variables_combined]
+                X_combined_scaled = pd.DataFrame(scaler.fit_transform(X_combined), columns=X_combined.columns)
+
+                X_train, X_test, y_train, y_test = train_test_split(X_combined_scaled, y, test_size=0.2, random_state=42)
+                model_xgb.fit(X_train, y_train)
+                importances_combined_xgb = model_xgb.feature_importances_
+
+                plt.figure(figsize=(10, 6))
+                plt.barh(variables_combined, importances_combined_xgb, color='coral')
+                plt.xlabel("Importància de les característiques")
+                plt.title("Variables No Psicològiques + Psicològiques Menys Importants (XGBoost)")
+                plt.show()
